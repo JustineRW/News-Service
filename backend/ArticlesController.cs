@@ -25,7 +25,10 @@ namespace ArticleController
 
             try
             {
-                List<Article> articles = await articleFetchingService.GetArticlesAsync(client, $"top-headlines?category=general&lang=en&country=au&max=10&apikey={}");
+                //TODO
+                // handle params
+                // handle key in a more secure way
+                List<Article> articles = await articleFetchingService.GetArticlesAsync(client, $"top-headlines?category=general&lang=en&country=au&max=10&apikey={GNewsApiKey.Key}");
                 articleTitles = articleFetchingService.GetArticleTitles(articles);
             }
             catch (Exception e)

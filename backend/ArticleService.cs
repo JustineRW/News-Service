@@ -8,12 +8,6 @@ public class ArticleService
 
         if (response.IsSuccessStatusCode)
         {
-            // var jsonDeserialisationOptions = new JsonSerializerOptions
-            // {
-            //     PropertyNameCaseInsensitive = true
-            // };
-            // ArticleDataset articleDatasetFromReadJson = await response.Content.ReadFromJsonAsync<ArticleDataset>(jsonDeserialisationOptions); //not working?
-
             string articleResponse = await response.Content.ReadAsStringAsync();
             ArticleDataset articleDatasetFromString = JsonConvert.DeserializeObject<ArticleDataset>(articleResponse);
             List<Article> articles = articleDatasetFromString?.Articles ?? new List<Article>();
