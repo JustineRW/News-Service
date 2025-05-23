@@ -1,11 +1,11 @@
 backend/GNewsApiKey.cs
 
 ## Build results
-backend/bin/
-backend/obj/
-backend/out/
-backend/Debug/
-backend/Release/
+/backend/bin/
+/backend/obj/
+/backend/out/
+/backend/Debug/
+/backend/Release/
 
 ## Visual Studio working files
 .vscode/
