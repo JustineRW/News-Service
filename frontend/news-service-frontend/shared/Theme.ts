@@ -3,6 +3,7 @@ constructor(
     public title : string,
     public subheader : string,
     public countryCode : string,
+    public country : string,
     public language : string,
 ){}
 }

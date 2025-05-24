@@ -18,7 +18,7 @@ namespace ArticleController
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<string>>> GetArticles([FromQuery] GNewsQueryOptions gNewsQueryOptions)
+        public async Task<ActionResult<IEnumerable<News>>> GetArticles([FromQuery] GNewsQueryOptions gNewsQueryOptions)
         {
             if (client.BaseAddress == null)
             {
@@ -35,37 +35,37 @@ namespace ArticleController
             }
 
             // If the call has a search query, fetch from the /search endpoint
-            Console.WriteLine("search keywords:" + gNewsQueryOptions.SearchKeywords);
             if (!string.IsNullOrEmpty(gNewsQueryOptions.SearchKeywords))
             {
-                List<string> searchResults = await SearchArticles(gNewsQueryOptions);
+                Console.WriteLine("search keywords:" + gNewsQueryOptions.SearchKeywords);
+                List<Article> searchResults = await SearchArticles(gNewsQueryOptions);
                 return searchResults;
             }
 
-            List<string> articleTitles = await GetTopHeadlines(gNewsQueryOptions);
+            List<ArticleDTO> articleTitles = await GetTopHeadlines(gNewsQueryOptions);
             return articleTitles;
 
         }
 
-        private async Task<List<string>> SearchArticles(QueryOptions queryOptions)
+        private async Task<List<Article>> SearchArticles(QueryOptions queryOptions)
         {
             string path = _apiOptions.SearchPath + queryOptions.GetSearchQuery();
-            List<string> articleTitles = await GetArticleTitles(path);
+            List<Article> articleTitles = await GetArticles(path);
             return articleTitles;
         }
-        private async Task<List<string>> GetTopHeadlines(QueryOptions queryOptions)
+        private async Task<List<ArticleDTO>> GetTopHeadlines(QueryOptions queryOptions)
         {
             string path = _apiOptions.HeadlinesPath + queryOptions.GetTopHeadlineQueryOptions();
-            List<string> articleTitles = await GetArticleTitles(path);
+            List<ArticleDTO> articleTitles = await GetArticleTitles(path);
             return articleTitles;
         }
-        private async Task<List<string>> GetArticleTitles(string path)
+
+        private async Task<List<ArticleDTO>> GetArticleTitles(string path)
         {
-            List<string> articleTitles = new();
+            List<ArticleDTO> articleTitles = new();
             try
             {
                 path += $"&apikey={GNewsApiKey.Key}";
-                Console.WriteLine("Get: " + path);
                 articleTitles = await articleFetchingService.GetArticleTitles(client, path);
             }
             catch (Exception e)
@@ -74,6 +74,21 @@ namespace ArticleController
             }
 
             return articleTitles;
+        }
+        private async Task<List<Article>> GetArticles(string path)
+        {
+            List<Article> articles = new();
+            try
+            {
+                path += $"&apikey={GNewsApiKey.Key}";
+                articles = await articleFetchingService.GetArticlesAsync(client, path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return articles;
         }
     }
 

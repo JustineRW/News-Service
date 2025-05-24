@@ -19,9 +19,9 @@ public class ArticleService
         }
     }
 
-    public async Task<List<string>> GetArticleTitles(HttpClient client, string path)
+    public async Task<List<ArticleDTO>> GetArticleTitles(HttpClient client, string path)
     {
         List<Article> articles = await GetArticlesAsync(client, path);
-        return articles.Select(article => article.Title).ToList();
+        return articles.Select(article => new ArticleDTO(article.Title, article.Url)).ToList();
     }
 }

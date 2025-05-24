@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Theme } from '../../../shared/Theme';
 
 @Component({
   selector: 'app-titlecard',
@@ -7,7 +8,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './titlecard.component.css'
 })
 export class TitlecardComponent {
-  @Input() title : string = "";
-  @Input() subheader : string  = "";
+  @Input() theme! : Theme;
 
 }

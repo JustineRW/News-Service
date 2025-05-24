@@ -1,4 +1,11 @@
-<div *ngFor="let headline of headlines; index as i; first as isFirst">
-  <span *ngIf="isFirst">First headline: </span>
-  {{ headline }}
+<div *ngFor="let article of articles; index as i; first as isFirst">
+  <ul>
+      <div class="d-flex flex-col p-1">
+        <div class="card border-0">
+          <img *ngIf="article.image != null" [src]="article.image" alt="Article image" class="w-25">
+          <a [href]="article.url" target="_blank">{{ article.title }}</a>
+          <div *ngIf="article.description != null">{{article.description}}</div>
+        </div>
+      </div>
+  </ul>
 </div>

@@ -10,7 +10,7 @@ public class GNewsQueryOptions() : QueryOptions
         ParameterNames["category"] = Category;
     }
 
-    // We override this in the child, because each API option class would presumably have different parameter implementations
+    // We override this in the child, because each API option class would presumably have different search parameter implementations
     public override string GetTopHeadlineQueryOptions()
     {
         string query = GetSearchQuery();

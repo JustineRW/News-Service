@@ -4,6 +4,7 @@
     type="text"
     placeholder="Search for news articles..."
     #searchinput
+    (keyup.enter)="search(searchinput.value)"
   />
   <span class="input-group-append">
     <button

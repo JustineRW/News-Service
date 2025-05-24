@@ -1,67 +1,80 @@
 <!-- Theme Switcher -->
 <div class="theme-switcher card rounded-pill p-3 shadow-sm border-0 bg-light">
   <div class="d-flex flex-row gap-2">
-    <button class="btn btn-sm theme-btn active" title="Australia theme">
+    <button
+      class="btn btn-sm theme-btn active d-flex justify-content-center align-items-center"
+      title="Australia theme"
+      (click)="changeTheme('australia')"
+    >
       <fa-icon [icon]="faSun" class="text-light"></fa-icon>
     </button>
-    <button class="btn btn-sm theme-btn" title="Norway theme">
+    <button
+      class="btn btn-sm theme-btn d-flex justify-content-center align-items-center"
+      title="England theme"
+      (click)="changeTheme('england')"
+    >
       <fa-icon [icon]="faSnowflake" class="text-light"></fa-icon>
     </button>
   </div>
 </div>
 
 <!-- Header -->
-<div *ngIf="isAustraliaTheme">
+<div *ngIf="isAustraliaTheme && !isEnglandTheme">
   <app-titlecard [theme]="australiaTheme"></app-titlecard>
 </div>
 
-<div *ngIf="isNorwayTheme">
-  <app-titlecard [theme]="norwayTheme"></app-titlecard>
+<div *ngIf="isEnglandTheme && !isAustraliaTheme">
+  <app-titlecard [theme]="englandTheme"></app-titlecard>
 </div>
 
-<!-- Headline Category Navigation -->
+<!-- Category buttons -->
 <div class="container mb-4">
   <div class="d-flex flex-wrap justify-content-center gap-3">
-    <button class="btn category-btn px-4 py-2">Nation</button>
-    <button class="btn category-btn px-4 py-2">World</button>
-    <button class="btn category-btn px-4 py-2">Business</button>
-    <button class="btn category-btn px-4 py-2">Sports</button>
-    <button class="btn category-btn px-4 py-2">Technology</button>
-    <button class="btn category-btn px-4 py-2">Entertainment</button>
-    <button class="btn category-btn px-4 py-2">Science</button>
-    <button class="btn category-btn px-4 py-2">Health</button>
+    <button
+      class="btn category-btn px-4 py-2"
+      *ngFor="let category of categories"
+      (click)="onCategoryButtonClick(category)"
+    >
+      {{ category | titlecase }}
+    </button>
   </div>
 </div>
 
 <!-- Headlines -->
-<div class="container card shadow-sm mb-5 border-0">
+<div class="container card shadow-sm mb-5 border-0 w-75">
+  <div class="p-3 lead">
+    Today's Top {{ currentNewsTheme.country | titlecase }} {{ currentCategory | titlecase }} Headlines
+  </div>
   <div class="p-4">
-    <app-headlines [headlines]="headlineInput"></app-headlines>
+    <app-headlines [articles]="headlineInput"></app-headlines>
   </div>
 </div>
 
 <!-- Search bar -->
-<div class="container card shadow-sm mb-5 border-0">
-  <div class="p-5">
+<div class="container card shadow-sm mb-5 border-0 w-75">
+  <div class="p-4">
     <app-search
       [theme]="currentNewsTheme"
+      [numberToFetch]="numberHeadlinesToFetch"
       (searchResultEvent)="acceptSearchResults($event)"
     ></app-search>
   </div>
 </div>
 
 <!-- Search results -->
+
 <div
   *ngIf="searchResults.length > 0"
-  class="container card shadow-sm mb-5 border-0"
+  class="container card shadow-sm mb-5 border-0 w-75"
 >
+  <div class="p-3 lead">Search Results</div>
   <div class="p-4">
-    <app-headlines [headlines]="searchResults"></app-headlines>
+    <app-headlines [articles]="searchResults"></app-headlines>
   </div>
 </div>
 
 <!-- Article filler -->
-<div class="container mb-5">
+<div class="container mb-5 w-75">
   <div class="row g-4">
     <div class="col-md-4">
       <div class="card p-4 border-0 shadow-sm">

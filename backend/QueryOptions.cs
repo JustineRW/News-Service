@@ -29,7 +29,6 @@ public abstract class QueryOptions
         .Where(kvp => !string.IsNullOrWhiteSpace(kvp.Value))
         .Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
 
-        Console.WriteLine(queryString);
         return queryString;
     }
 
