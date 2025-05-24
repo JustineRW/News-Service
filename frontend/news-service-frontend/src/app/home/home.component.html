@@ -43,7 +43,7 @@
 <!-- Headlines -->
 <div class="container card shadow-sm mb-5 border-0 w-75">
   <div class="p-3 lead">
-    Today's Top {{ currentNewsTheme.country | titlecase }} {{ currentCategory | titlecase }} Headlines
+    Today's Top {{ currentCategory | titlecase }} Headlines ({{currentNewsTheme.countryCode | uppercase}} sources)
   </div>
   <div class="p-4">
     <app-headlines [articles]="headlineInput"></app-headlines>
@@ -67,7 +67,7 @@
   *ngIf="searchResults.length > 0"
   class="container card shadow-sm mb-5 border-0 w-75"
 >
-  <div class="p-3 lead">Search Results</div>
+  <div class="p-3 lead">Search Results ({{currentNewsTheme.country}}-focused)</div>
   <div class="p-4">
     <app-headlines [articles]="searchResults"></app-headlines>
   </div>

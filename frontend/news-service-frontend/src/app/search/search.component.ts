@@ -17,6 +17,7 @@ export class SearchComponent {
   @Output() searchResultEvent = new EventEmitter<Article[]>();
 
   faMagnifyingGlass = faMagnifyingGlass;
+  MAX_QUERY_LENGTH = 100;
 
   constructor(private articleService: ArticleService) {}
 
@@ -37,6 +38,16 @@ export class SearchComponent {
   }
 
   private cleanUserInput(input: string) {
+    let searchQuery = input
+      .trim()
+      .replace(/\s+/g, ' ')
+      .replace(/[^\w\s\-'"&]/g, '');
+
+    if (searchQuery.length > this.MAX_QUERY_LENGTH) {
+      searchQuery = searchQuery.substring(0, this.MAX_QUERY_LENGTH);
+    }
+
+    debugger;
     return input.trim();
   }
 }

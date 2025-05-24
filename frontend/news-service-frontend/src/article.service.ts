@@ -36,7 +36,7 @@ export class ArticleService {
       'pagesize',
       numberOfHeadlinesToFetch.toString()
     );
-    articleUrl.searchParams.append('search', query);
+    articleUrl.searchParams.append('search', encodeURIComponent(query));
     articleUrl.searchParams.append('country', currentNewsTheme.countryCode);
     articleUrl.searchParams.append('language', currentNewsTheme.language);
     return this.http.get<Article[]>(articleUrl.toString());

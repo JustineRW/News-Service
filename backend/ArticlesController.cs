@@ -11,6 +11,7 @@ namespace ArticleController
     {
         static HttpClient client = new HttpClient();
         static ArticleService articleFetchingService = new ArticleService();
+        private const int MAX_QUERY_LENGTH = 100;
         private readonly ExternalApiOptions _apiOptions;
         public ArticlesController(IOptions<ExternalApiOptions> apiOptions)
         {
@@ -28,11 +29,7 @@ namespace ArticleController
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            // Allow only the max article number
-            if (gNewsQueryOptions.NumberOfArticles > _apiOptions.MAX_ARTICLE_NUMBER)
-            {
-                gNewsQueryOptions.NumberOfArticles = _apiOptions.MAX_ARTICLE_NUMBER;
-            }
+            SantiseUserInput(gNewsQueryOptions);
 
             // If the call has a search query, fetch from the /search endpoint
             if (!string.IsNullOrEmpty(gNewsQueryOptions.SearchKeywords))
@@ -47,12 +44,27 @@ namespace ArticleController
 
         }
 
+        private void SantiseUserInput(GNewsQueryOptions gNewsQueryOptions)
+        {
+            // Allow only the max article number
+            if (gNewsQueryOptions.NumberOfArticles > _apiOptions.MAX_ARTICLE_NUMBER)
+            {
+                gNewsQueryOptions.NumberOfArticles = _apiOptions.MAX_ARTICLE_NUMBER;
+            }
+
+            if (!string.IsNullOrEmpty(gNewsQueryOptions.SearchKeywords) && gNewsQueryOptions.SearchKeywords.Length > MAX_QUERY_LENGTH)
+            {
+                gNewsQueryOptions.SearchKeywords = gNewsQueryOptions.SearchKeywords.Substring(0, MAX_QUERY_LENGTH);
+            }
+        }
+
         private async Task<List<Article>> SearchArticles(QueryOptions queryOptions)
         {
             string path = _apiOptions.SearchPath + queryOptions.GetSearchQuery();
             List<Article> articleTitles = await GetArticles(path);
             return articleTitles;
         }
+
         private async Task<List<ArticleDTO>> GetTopHeadlines(QueryOptions queryOptions)
         {
             string path = _apiOptions.HeadlinesPath + queryOptions.GetTopHeadlineQueryOptions();
