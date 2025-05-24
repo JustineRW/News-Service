@@ -1,6 +1,7 @@
 
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace ArticleController
 {
@@ -8,72 +9,64 @@ namespace ArticleController
     [Route("api/articles")]
     public class ArticlesController : ControllerBase
     {
-
         static HttpClient client = new HttpClient();
         static ArticleService articleFetchingService = new ArticleService();
-        static GNewsQueryOptions queryOptions = new GNewsQueryOptions();
+        private readonly ExternalApiOptions _apiOptions;
+        public ArticlesController(IOptions<ExternalApiOptions> apiOptions)
+        {
+            _apiOptions = apiOptions.Value;
+        }
 
         [HttpGet]
-        public async Task<ActionResult<List<string>>> Get()
+        public async Task<ActionResult<List<string>>> GetArticles([FromQuery] GNewsQueryOptions gNewsQueryOptions)
         {
-
             if (client.BaseAddress == null)
             {
-                client.BaseAddress = new Uri("https://gnews.io/api/v4/");
+                client.BaseAddress = new Uri(_apiOptions.BaseUrl);
             }
-
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            List<string> searchResults = new();
-            List<string> articleTitles = new();
-
-
-            if (!string.IsNullOrEmpty(Request.Query["search"]))
+            // Allow only the max article number
+            if (gNewsQueryOptions.NumberOfArticles > _apiOptions.MAX_ARTICLE_NUMBER)
             {
-                string searchQuery = Request.Query["search"];
-                GNewsQueryOptions searchQueryOptions = new GNewsQueryOptions(searchQuery);
-                searchResults = await SearchArticles(searchQueryOptions);
-
-            }
-            else
-            {
-                articleTitles = await GetTopHeadlines();
+                gNewsQueryOptions.NumberOfArticles = _apiOptions.MAX_ARTICLE_NUMBER;
             }
 
-            return searchResults;
+            // If the call has a search query, fetch from the /search endpoint
+            Console.WriteLine("search keywords:" + gNewsQueryOptions.SearchKeywords);
+            if (!string.IsNullOrEmpty(gNewsQueryOptions.SearchKeywords))
+            {
+                List<string> searchResults = await SearchArticles(gNewsQueryOptions);
+                return searchResults;
+            }
+
+            List<string> articleTitles = await GetTopHeadlines(gNewsQueryOptions);
+            return articleTitles;
+
         }
 
-        private static async Task<List<string>> GetTopHeadlines()
+        private async Task<List<string>> SearchArticles(QueryOptions queryOptions)
         {
-
-            List<string> articleTitles = new();
-            try
-            {
-                //TODO
-                // handle key in a more secure way
-
-                List<Article> articles = await articleFetchingService.GetArticlesAsync(client, "top-headlines" + queryOptions.GetTopHeadlineQueryOptions());
-                articleTitles = articleFetchingService.GetArticleTitles(articles);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
+            string path = _apiOptions.SearchPath + queryOptions.GetSearchQuery();
+            List<string> articleTitles = await GetArticleTitles(path);
             return articleTitles;
         }
-        private static async Task<List<string>> SearchArticles(GNewsQueryOptions searchQueryOptions)
+        private async Task<List<string>> GetTopHeadlines(QueryOptions queryOptions)
+        {
+            string path = _apiOptions.HeadlinesPath + queryOptions.GetTopHeadlineQueryOptions();
+            List<string> articleTitles = await GetArticleTitles(path);
+            return articleTitles;
+        }
+        private async Task<List<string>> GetArticleTitles(string path)
         {
             List<string> articleTitles = new();
             try
             {
-                //TODO
-                // handle key in a more secure way
-
-                List<Article> articles = await articleFetchingService.GetArticlesAsync(client, "search" + searchQueryOptions.GetSearchQueryOptions());
-                articleTitles = articleFetchingService.GetArticleTitles(articles);
+                path += $"&apikey={GNewsApiKey.Key}";
+                Console.WriteLine("Get: " + path);
+                articleTitles = await articleFetchingService.GetArticleTitles(client, path);
             }
             catch (Exception e)
             {

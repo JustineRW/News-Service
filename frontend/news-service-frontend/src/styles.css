@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --dawn-gold: #F4D03F;
+    --desert-sand: #F7DC6F;
+    --warm-peach: #FADBD8;
+    --soft-coral: #F8D7DA;
+    --dusty-rose: #E8DAEF;
+    --morning-sky: #AED6F1;
+}
+
+.category-btn {
+    background: linear-gradient(135deg, var(--warm-peach) 0%, var(--dawn-gold) 100%);
+    border: none;
+    border-radius: 25px;
+    color: #5D4037;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+    background: linear-gradient(135deg, var(--morning-sky) 0%, var(--dusty-rose) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(248, 215, 218, 0.4);
+}
+

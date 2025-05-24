@@ -1,3 +1,104 @@
-<h1>The Sydney Scientific</h1>
-<ul>{{ headlines.join(", ") }}</ul>
-<app-search></app-search>
+<!-- Theme Switcher -->
+<div class="theme-switcher card rounded-pill p-3 shadow-sm border-0 bg-light">
+  <div class="d-flex flex-row gap-2">
+    <button class="btn btn-sm theme-btn active" title="Australia theme">
+      <fa-icon [icon]="faSun" class="text-light"></fa-icon>
+    </button>
+    <button class="btn btn-sm theme-btn" title="Norway theme">
+      <fa-icon [icon]="faSnowflake" class="text-light"></fa-icon>
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<div *ngIf="isAustraliaTheme">
+  <app-titlecard [theme]="australiaTheme"></app-titlecard>
+</div>
+
+<div *ngIf="isNorwayTheme">
+  <app-titlecard [theme]="norwayTheme"></app-titlecard>
+</div>
+
+<!-- Headline Category Navigation -->
+<div class="container mb-4">
+  <div class="d-flex flex-wrap justify-content-center gap-3">
+    <button class="btn category-btn px-4 py-2">Nation</button>
+    <button class="btn category-btn px-4 py-2">World</button>
+    <button class="btn category-btn px-4 py-2">Business</button>
+    <button class="btn category-btn px-4 py-2">Sports</button>
+    <button class="btn category-btn px-4 py-2">Technology</button>
+    <button class="btn category-btn px-4 py-2">Entertainment</button>
+    <button class="btn category-btn px-4 py-2">Science</button>
+    <button class="btn category-btn px-4 py-2">Health</button>
+  </div>
+</div>
+
+<!-- Headlines -->
+<div class="container card shadow-sm mb-5 border-0">
+  <div class="p-4">
+    <app-headlines [headlines]="headlineInput"></app-headlines>
+  </div>
+</div>
+
+<!-- Search bar -->
+<div class="container card shadow-sm mb-5 border-0">
+  <div class="p-5">
+    <app-search
+      [theme]="currentNewsTheme"
+      (searchResultEvent)="acceptSearchResults($event)"
+    ></app-search>
+  </div>
+</div>
+
+<!-- Search results -->
+<div
+  *ngIf="searchResults.length > 0"
+  class="container card shadow-sm mb-5 border-0"
+>
+  <div class="p-4">
+    <app-headlines [headlines]="searchResults"></app-headlines>
+  </div>
+</div>
+
+<!-- Article filler -->
+<div class="container mb-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card p-4 border-0 shadow-sm">
+        <h3 class="h4 text-center mb-3">Business & Finance</h3>
+        <p class="text-muted">
+          Stay updated with the latest market trends, economic news, and
+          business developments across Australia and the Asia-Pacific region.
+        </p>
+        <div class="text-center mt-auto">
+          <button class="btn category-btn">Read More</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-4 border-0 shadow-sm">
+        <h3 class="h4 text-center mb-3">World News</h3>
+        <p class="text-muted">
+          International coverage with an Australian perspective on global
+          events, politics, and cultural developments that matter to our
+          readers.
+        </p>
+        <div class="text-center mt-auto">
+          <button class="btn category-btn">Read More</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-4 border-0 shadow-sm">
+        <h3 class="h4 text-center mb-3">Weather & Environment</h3>
+        <p class="text-muted">
+          Weather forecasts, climate news, and environmental stories covering
+          Australia's unique landscape and environmental challenges.
+        </p>
+        <div class="text-center mt-auto">
+          <button class="btn category-btn">Read More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

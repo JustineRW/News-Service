@@ -18,6 +18,9 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.Configure<ExternalApiOptions>(
+    builder.Configuration.GetSection("ExternalApi"));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

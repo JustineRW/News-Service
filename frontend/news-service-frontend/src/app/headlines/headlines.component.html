@@ -1,0 +1,4 @@
+<div *ngFor="let headline of headlines; index as i; first as isFirst">
+  <span *ngIf="isFirst">First headline: </span>
+  {{ headline }}
+</div>

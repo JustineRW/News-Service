@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 public class ArticleService
 {
-    public async Task<List<Article>> GetArticlesAsync(HttpClient client, string path, int numberOfArticles = 10)
+    public async Task<List<Article>> GetArticlesAsync(HttpClient client, string path)
     {
         HttpResponseMessage response = await client.GetAsync(path);
 
@@ -19,8 +19,9 @@ public class ArticleService
         }
     }
 
-    public List<string> GetArticleTitles(List<Article> articles)
+    public async Task<List<string>> GetArticleTitles(HttpClient client, string path)
     {
+        List<Article> articles = await GetArticlesAsync(client, path);
         return articles.Select(article => article.Title).ToList();
     }
 }
