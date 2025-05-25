@@ -63,16 +63,18 @@ public class ArticlesController : ControllerBase
             gNewsQueryOptions.NumberOfArticles = apiOptions.MAX_ARTICLE_NUMBER;
         }
 
-        if (!string.IsNullOrEmpty(gNewsQueryOptions.SearchKeywords) && gNewsQueryOptions.SearchKeywords.Length > MAX_QUERY_LENGTH)
+        if (!string.IsNullOrEmpty(gNewsQueryOptions.SearchKeywords))
         {
-            gNewsQueryOptions.SearchKeywords = gNewsQueryOptions.SearchKeywords.Substring(0, MAX_QUERY_LENGTH);
+
+            if (gNewsQueryOptions.SearchKeywords.Length > MAX_QUERY_LENGTH)
+            {
+                gNewsQueryOptions.SearchKeywords = gNewsQueryOptions.SearchKeywords.Substring(0, MAX_QUERY_LENGTH);
+            }
+
+            gNewsQueryOptions.SearchKeywords = Regex.Replace(
+            Regex.Replace(gNewsQueryOptions.SearchKeywords.Trim(), @"[^\w\s\-'""]", ""), @"\s+", " ");
+
         }
-
-        string cleanedKeywords = Regex.Replace(
-            Regex.Replace(gNewsQueryOptions?.SearchKeywords.Trim(), @"[^\w\s\-'""]", ""), @"\s+", " "
-        );
-
-        gNewsQueryOptions.SearchKeywords = cleanedKeywords;
 
     }
 

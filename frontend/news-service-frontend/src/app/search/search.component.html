@@ -3,14 +3,15 @@
     class="form-control border-end-0 border rounded-pill"
     type="text"
     placeholder="Search for news articles..."
-    #searchinput
-    (keyup.enter)="search(searchinput.value)"
+    [(ngModel)]="searchQuery"
+    (keyup.enter)="search()"
+    name="search"
   />
   <span class="input-group-append">
     <button
       class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill"
       type="button"
-      (click)="search(searchinput.value)"
+      (click)="search()"
     >
       <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
     </button>

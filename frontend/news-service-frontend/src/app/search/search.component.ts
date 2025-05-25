@@ -4,10 +4,11 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { ArticleService } from '../../article.service';
 import { Theme } from '../../../shared/Theme';
 import { Article } from '../../../shared/Article';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, FormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
@@ -16,25 +17,30 @@ export class SearchComponent {
   @Input() numberToFetch: number = 10;
   @Output() searchResultEvent = new EventEmitter<Article[]>();
 
+  searchQuery: string = '';
   faMagnifyingGlass = faMagnifyingGlass;
   MAX_QUERY_LENGTH = 100;
 
   constructor(private articleService: ArticleService) {}
 
-  search(input: string): void {
-    const searchTerms = this.cleanUserInput(input);
+  search(): void {
+    if (this.searchQuery.trim()) {
+      const searchTerms = this.cleanUserInput(this.searchQuery);
 
-    this.articleService
-      .getSearchResults(this.numberToFetch, searchTerms, this.theme)
-      .subscribe({
-        next: (results: Article[]) => {
-          this.searchResultEvent.emit(results);
-        },
-        error: (error) => {
-          console.error('Search failed:', error);
-          this.searchResultEvent.emit([]);
-        },
-      });
+      this.articleService
+        .getSearchResults(this.numberToFetch, searchTerms, this.theme)
+        .subscribe({
+          next: (results: Article[]) => {
+            this.searchResultEvent.emit(results);
+          },
+          error: (error) => {
+            console.error('Search failed:', error);
+            this.searchResultEvent.emit([]);
+          },
+        });
+    }
+
+    this.searchQuery = '';
   }
 
   private cleanUserInput(input: string) {
