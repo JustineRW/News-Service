@@ -47,7 +47,6 @@ export class SearchComponent {
       searchQuery = searchQuery.substring(0, this.MAX_QUERY_LENGTH);
     }
 
-    debugger;
     return input.trim();
   }
 }

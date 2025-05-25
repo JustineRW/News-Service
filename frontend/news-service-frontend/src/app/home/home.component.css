@@ -5,6 +5,13 @@
     z-index: 1000;
 }
 
+.pagesize-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
 .theme-btn {
     width: 30px;
     height: 30px;

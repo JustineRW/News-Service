@@ -35,11 +35,12 @@ export class HomeComponent {
   australiaTheme!: Theme;
   currentNewsTheme!: Theme;
 
-  numberHeadlinesToFetch: number = 10;
   headlineInput: Article[] = [];
   searchResults: Article[] = [];
   currentCategory: NewsCategory = NewsCategory.Nation;
   categories = Object.values(NewsCategory);
+  pageSizes : number[] = [5,10,15];
+  currentPageSize: number = 10;
 
   constructor(private articleService: ArticleService) {}
 
@@ -65,36 +66,40 @@ export class HomeComponent {
     // this.getHeadlinesByCategory(NewsCategory.Nation);
   }
 
-  private getHeadlinesByCategory(category: string) {
+  private getHeadlinesByCategory(pagesize: number, category: string) {
     this.articleService
-      .getTopHeadlinesByCategory(
-        this.numberHeadlinesToFetch,
-        this.currentNewsTheme,
-        category
-      )
+      .getTopHeadlinesByCategory(pagesize, this.currentNewsTheme, category)
       .subscribe((headlines: Article[]) => (this.headlineInput = headlines));
   }
 
   onCategoryButtonClick(category: NewsCategory) {
     this.currentCategory = category;
-    this.getHeadlinesByCategory(category);
+    this.getHeadlinesByCategory(this.currentPageSize, category);
+  }
+
+  onPagesizeButtonClick(pagesize: number) {
+    this.currentPageSize = pagesize;
+    this.getHeadlinesByCategory(pagesize, this.currentCategory);
   }
 
   acceptSearchResults(eventSearchResults: Article[]) {
     this.searchResults = eventSearchResults;
   }
 
-  changeTheme(theme: string){
-    if(theme === 'australia'){
+  changeTheme(theme: string) {
+    if (theme === 'australia') {
       this.isAustraliaTheme = true;
       this.isEnglandTheme = false;
+      this.searchResults = [];
       this.currentNewsTheme = this.australiaTheme;
+      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory)
     }
-    if(theme === 'england'){
+    if (theme === 'england') {
       this.isEnglandTheme = true;
       this.isAustraliaTheme = false;
+      this.searchResults = [];
       this.currentNewsTheme = this.englandTheme;
+      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
     }
   }
 }
-

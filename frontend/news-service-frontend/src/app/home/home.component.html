@@ -1,8 +1,12 @@
 <!-- Theme Switcher -->
-<div class="theme-switcher card rounded-pill p-3 shadow-sm border-0 bg-light">
+<div
+  class="theme-switcher card rounded-pill p-3 shadow-sm border-0 bg-light"
+  title="Select a theme"
+>
   <div class="d-flex flex-row gap-2">
     <button
-      class="btn btn-sm theme-btn active d-flex justify-content-center align-items-center"
+      class="btn btn-sm theme-btn d-flex justify-content-center align-items-center"
+      [class.active] = isAustraliaTheme
       title="Australia theme"
       (click)="changeTheme('australia')"
     >
@@ -10,12 +14,30 @@
     </button>
     <button
       class="btn btn-sm theme-btn d-flex justify-content-center align-items-center"
+            [class.active] = isEnglandTheme
       title="England theme"
       (click)="changeTheme('england')"
     >
       <fa-icon [icon]="faSnowflake" class="text-light"></fa-icon>
     </button>
   </div>
+</div>
+
+<!-- Pagesize buttons -->
+<div
+  class="pagesize-switcher rounded-pill card p-3 mb-5 shadow-sm border-0 bg-light d-flex flex-row flex-wrap gap-2"
+  title="Number of results"
+>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+      <button
+        class="btn category-btn btn-sm"
+        *ngFor="let pagesize of pageSizes"
+        [class.active]="currentPageSize == pagesize"
+        (click)="onPagesizeButtonClick(pagesize)"
+      >
+        {{ pagesize}}
+      </button>
+    </div>
 </div>
 
 <!-- Header -->
@@ -32,6 +54,7 @@
   <div class="d-flex flex-wrap justify-content-center gap-3">
     <button
       class="btn category-btn px-4 py-2"
+      [class.active]="category == currentCategory"
       *ngFor="let category of categories"
       (click)="onCategoryButtonClick(category)"
     >
@@ -41,9 +64,12 @@
 </div>
 
 <!-- Headlines -->
-<div class="container card shadow-sm mb-5 border-0 w-75">
+<div class="container card shadow-sm mb-5 border-0 w-75 p-3">
   <div class="p-3 lead">
-    Today's Top {{ currentCategory | titlecase }} Headlines ({{currentNewsTheme.countryCode | uppercase}} sources)
+    Today's Top {{ currentCategory | titlecase }} Headlines ({{
+      currentNewsTheme.countryCode | uppercase
+    }}
+    sources)
   </div>
   <div class="p-4">
     <app-headlines [articles]="headlineInput"></app-headlines>
@@ -55,7 +81,7 @@
   <div class="p-4">
     <app-search
       [theme]="currentNewsTheme"
-      [numberToFetch]="numberHeadlinesToFetch"
+      [numberToFetch]="currentPageSize"
       (searchResultEvent)="acceptSearchResults($event)"
     ></app-search>
   </div>
@@ -67,7 +93,9 @@
   *ngIf="searchResults.length > 0"
   class="container card shadow-sm mb-5 border-0 w-75"
 >
-  <div class="p-3 lead">Search Results ({{currentNewsTheme.country}}-focused)</div>
+  <div class="p-3 lead">
+    Search Results ({{ currentNewsTheme.country }}-focused)
+  </div>
   <div class="p-4">
     <app-headlines [articles]="searchResults"></app-headlines>
   </div>
