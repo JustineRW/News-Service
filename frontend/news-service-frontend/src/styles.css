@@ -80,13 +80,13 @@ body {
 
 .snowy-background {
     background:
-        radial-gradient(circle at 40% 20%, white 1px, transparent 1px),
+        radial-gradient(circle at 45% 20%, white 1px, transparent 1px),
         radial-gradient(circle at 90% 30%, white 2px, transparent 2px),
-        radial-gradient(circle at 80% 30%, white 3.5px, transparent 3.5px),
+        radial-gradient(circle at 85% 35%, white 3.5px, transparent 3.5px),
         radial-gradient(circle at 50% 10%, white 1px, transparent 1px),
-        radial-gradient(circle at 70% 80%, white 1.5px, transparent 1.5px),
-        linear-gradient(to bottom, transparent 0%, #f7f7f6 40%, #d3ebff 100%);
-    background-size: 100px 100px, 200px 200px, 100% 100%;
+        radial-gradient(circle at 75% 80%, white 1.5px, transparent 1.5px),
+        linear-gradient(to bottom, transparent 0%, #f7f7f6 40%, #6291b8 100%);
+    background-size: 200px 200px, 200px 200px, 100% 100%;
     background-repeat: repeat, repeat, no-repeat;
     background-blend-mode: screen;
 }
