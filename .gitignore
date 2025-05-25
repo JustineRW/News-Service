@@ -1,1 +1,2 @@
 frontend/.vscode/settings.json
+backend/src/Models/GNewsApiKey.cs
