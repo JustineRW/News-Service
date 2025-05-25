@@ -1,6 +1,16 @@
-<div class="jumbotron text-center p-5 m-4">
-  <h1 class="display-4 fw-bold text-dark mb-3">{{ theme.title }}</h1>
-  <div class="p-2">
-    <p class="lead text-dark mb-0">{{ theme.subheader }}</p>
+<div class="jumbotron text-center p-5 m-4 position-relative">
+  <!-- Background image -->
+  <img
+    [src]="theme.assetName"
+    class="position-absolute top-50 end-50 translate-middle opacity-25"
+    style="z-index: 1; max-width: 350px"
+  />
+
+  <!-- Foreground content -->
+  <div class="position-relative" style="z-index: 2">
+    <h1 class="display-4 fw-bold text-dark mb-3">{{ theme.title }}</h1>
+    <div class="p-2">
+      <p class="lead text-dark mb-0">{{ theme.subheader }}</p>
+    </div>
   </div>
 </div>

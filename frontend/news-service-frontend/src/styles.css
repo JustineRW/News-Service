@@ -15,55 +15,87 @@ body {
 }
 
 body {
-    font-family: 'Ancizar Serif', serif;
+    font-family: "Ancizar Serif", serif;
 }
 
 .category-btn {
-    background: linear-gradient(135deg, var(--warm-peach) 0%, var(--dawn-gold) 100%);
+    background: linear-gradient(135deg,
+            var(--warm-peach) 0%,
+            var(--dawn-gold) 100%);
     border: none;
     border-radius: 25px;
-    color: #5D4037;
+    color: #5d4037;
     font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .category-btn:hover {
-    background: linear-gradient(135deg, var(--morning-sky) 0%, var(--dusty-rose) 100%);
+    background: linear-gradient(135deg,
+            var(--morning-sky) 0%,
+            var(--dusty-rose) 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(248, 215, 218, 0.4);
 }
 
 .category-btn.active {
-    background: linear-gradient(135deg, var(--morning-sky) 0%, var(--dusty-rose) 100%);
+    background: linear-gradient(135deg,
+            var(--morning-sky) 0%,
+            var(--dusty-rose) 100%);
+    border-color: var(--dawn-gold);
+    color: #2c3e50;
+}
+
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #f4d03f4d;
+    background: linear-gradient(135deg, var(--dusty-rose) 0%, var(--morning-sky) 100%);
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--dawn-gold);
+    background: linear-gradient(135deg, var(--dawn-gold) 0%, var(--desert-sand) 100%);
+    color: #2C3E50;
+}
+
+.theme-btn.active {
+    background: linear-gradient(135deg, var(--dawn-gold) 0%, var(--warm-peach) 100%);
     border-color: var(--dawn-gold);
     color: #2C3E50;
 }
 
 .snowy-background {
     background:
-        radial-gradient(white 1px, transparent 1px) 0 0,
-        radial-gradient(white 1px, transparent 1px) 10px 10px,
-        radial-gradient(circle at 80% 30%, white 2px, transparent 2px),
+        radial-gradient(circle at 40% 20%, white 1px, transparent 1px),
+        radial-gradient(circle at 90% 30%, white 2px, transparent 2px),
+        radial-gradient(circle at 80% 30%, white 3.5px, transparent 3.5px),
         radial-gradient(circle at 50% 10%, white 1px, transparent 1px),
-        radial-gradient(circle at 20% 80%, white 1.5px, transparent 1.5px),
-        linear-gradient(to bottom, transparent 0%, #dbeeff 100%);
-    background-size: 50px 50px, 200px 200px, 100% 100%;
+        radial-gradient(circle at 70% 80%, white 1.5px, transparent 1.5px),
+        linear-gradient(to bottom, transparent 0%, #f7f7f6 40%, #d3ebff 100%);
+    background-size: 100px 100px, 200px 200px, 100% 100%;
     background-repeat: repeat, repeat, no-repeat;
     background-blend-mode: screen;
 }
 
 .desert-background {
-background: linear-gradient(to bottom,
-    transparent 0%,
-    #c4ecfa4d 30%,
-
-    #fadbd866 35%,
-    /* warm peach */
-    #f7dc6f80 75%,
-    /* desert sand */
-    #f4cf3e99 100%
-    /* dawn gold */
-        );
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            #c4ecfa4d 30%,
+            #fadbd866 35%,
+            #f7dc6f80 75%,
+            #f4cf3e99 100%);
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: screen;

@@ -51,7 +51,8 @@ export class HomeComponent {
       'uk',
       'England',
       'English',
-      'en'
+      'en',
+      'Robin.png'
     );
     this.australiaTheme = new Theme(
       'The Wallaby Word',
@@ -59,13 +60,14 @@ export class HomeComponent {
       'au',
       'Australia',
       'Australian',
-      'en'
+      'en',
+      'Wallaby.png'
     );
     this.currentNewsTheme = this.isEnglandTheme
       ? this.englandTheme
       : this.australiaTheme;
 
-    this.getHeadlinesByCategory(this.currentPageSize, NewsCategory.Nation);
+    // this.getHeadlinesByCategory(this.currentPageSize, NewsCategory.Nation);
   }
 
   private getHeadlinesByCategory(pagesize: number, category: string) {
@@ -94,14 +96,14 @@ export class HomeComponent {
       this.isEnglandTheme = false;
       this.searchResults = [];
       this.currentNewsTheme = this.australiaTheme;
-      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
+      // this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
     }
     if (theme === 'england') {
       this.isEnglandTheme = true;
       this.isAustraliaTheme = false;
       this.searchResults = [];
       this.currentNewsTheme = this.englandTheme;
-      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
+      // this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
     }
   }
 }

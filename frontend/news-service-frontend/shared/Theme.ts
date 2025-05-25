@@ -6,5 +6,6 @@ constructor(
     public country : string,
     public countryAdjective : string,
     public language : string,
+    public assetName : string,
 ){}
 }
