@@ -86,9 +86,59 @@ body {
         radial-gradient(circle at 50% 10%, white 1px, transparent 1px),
         radial-gradient(circle at 75% 80%, white 1.5px, transparent 1.5px),
         linear-gradient(to bottom, transparent 0%, #f7f7f6 40%, #6291b8 100%);
-    background-size: 200px 200px, 200px 200px, 100% 100%;
-    background-repeat: repeat, repeat, no-repeat;
+    background-size:
+        200px 200px,
+        300px 300px,
+        250px 250px,
+        150px 150px,
+        180px 180px,
+        100% 100%;
+    background-repeat: repeat, repeat, repeat, repeat, repeat, no-repeat;
     background-blend-mode: screen;
+    animation: gentle-float 50s linear infinite;
+}
+
+@keyframes gentle-float {
+
+    0% {
+        background-position:
+            0% 0%,
+            0% 0%,
+            0% 0%,
+            0% 0%,
+            0% 0%,
+            0% 0%;
+    }
+
+    25% {
+        background-position:
+            -50px 50px,
+            75px 75px,
+            -62.5px 62.5px,
+            37.5px 37.5px,
+            -45px 45px,
+            0% 0%;
+    }
+
+    50% {
+        background-position:
+            -100px 100px,
+            150px 150px,
+            -125px 125px,
+            75px 75px,
+            -90px 90px,
+            0% 0%;
+    }
+
+    75% {
+        background-position:
+            -150px 150px,
+            225px 225px,
+            -187.5px 187.5px,
+            112.5px 112.5px,
+            -135px 135px,
+            0% 0%;
+    }
 }
 
 .desert-background {
