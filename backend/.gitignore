@@ -3,7 +3,6 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
-GNewsApiKey.cs
 
 # dotenv files
 .env
