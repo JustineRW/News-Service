@@ -55,6 +55,7 @@ Pull down repo, using your preferred Git method then open repo in IDE of choice 
   - This should install Angular CLI, Bootstrap and other required packages
 3. There is an npm script for running the frontend. Run either the `start` script in **frontend/news-service-frontend/package.json**, or serve the frontend with `ng serve`
 4. The frontend will run on [localhost:4200](http://localhost:4200/)
+5. Main logic and html for the frontend can be found in **frontend/news-service-frontend/src/app/home** in the home.component.ts and home.component.html files. Main styling can be found in styles.cs
 
 
 
@@ -66,6 +67,7 @@ Pull down repo, using your preferred Git method then open repo in IDE of choice 
 5. Run `dotnet run`
 6. The backend will run on [http://localhost:5056](http://localhost:5056) and [https://localhost:7201](https://localhost:7201). 
 7. You can view the data that the backend will return by going to http://localhost:5056/api/articles?language=en
+8. Business logic for the backend is in **backend/src/Controllers/ArticlesController.cs**,  **backend/src/Services/ArticleService.cs** and **backend/src/Program.cs** 
    
 The frontend will call [http://localhost:5056](http://localhost:5056)
 
