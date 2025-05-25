@@ -1,5 +1,5 @@
 :root {
-    --dawn-gold: #F4D03F;
+    --dawn-gold: #f8d95d;
     --desert-sand: #F7DC6F;
     --warm-peach: #FADBD8;
     --soft-coral: #F8D7DA;
@@ -20,8 +20,10 @@ body {
 
 .category-btn {
     background: linear-gradient(135deg,
-            var(--warm-peach) 0%,
-            var(--dawn-gold) 100%);
+    #fadbd866 25%,
+    #f7dc6f80 65%,
+    var(--dawn-gold) 100%
+    );
     border: none;
     border-radius: 25px;
     color: #5d4037;
@@ -93,7 +95,7 @@ body {
     background: linear-gradient(to bottom,
             transparent 0%,
             #c4ecfa4d 30%,
-            #fadbd866 35%,
+            #fadbd866 55%,
             #f7dc6f80 75%,
             #f4cf3e99 100%);
     background-repeat: no-repeat;
