@@ -71,6 +71,7 @@ Pull down repo, using your preferred Git method then open repo in IDE of choice 
 4. Run `dotnet restore` command in the terminal to restore the NuGet packages
 5. Run `dotnet run`
 6. The backend will run on [http://localhost:5056](http://localhost:5056) and [https://localhost:7201](https://localhost:7201). 
+7. You can view the data that the backend will return by going to http://localhost:5056/api/articles?language=en
    
 The frontend will call [http://localhost:5056](http://localhost:5056)
 
