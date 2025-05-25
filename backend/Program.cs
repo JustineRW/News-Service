@@ -18,11 +18,16 @@ builder.Services.AddCors(options =>
         });
 });
 
+//Fetch news api configuration
 builder.Services.Configure<ExternalApiOptions>(
     builder.Configuration.GetSection("ExternalApi"));
 
+builder.Services.AddHttpClient<ArticlesController>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
+
 var app = builder.Build();
 
+// Use CORS policy for dev environment
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -30,12 +35,13 @@ if (app.Environment.IsDevelopment())
     {
         options.DocumentPath = "/openapi/v1.json";
     });
+    app.UseCors(AllowLocalHost);
+}
+else
+{
+    app.UseHttpsRedirection();
 }
 
-// Enable CORS for development
-app.UseCors(AllowLocalHost);
-
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

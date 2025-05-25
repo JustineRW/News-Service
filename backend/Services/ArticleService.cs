@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-public class ArticleService
+public class ArticleService : IArticleService
 {
     public async Task<List<Article>> GetArticlesAsync(HttpClient client, string path)
     {
