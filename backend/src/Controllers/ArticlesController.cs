@@ -1,5 +1,6 @@
 
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -34,6 +35,7 @@ public class ArticlesController : ControllerBase
         {
             httpClient.BaseAddress = new Uri(apiOptions.BaseUrl);
         }
+
         httpClient.DefaultRequestHeaders.Accept.Clear();
         httpClient.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
@@ -65,51 +67,27 @@ public class ArticlesController : ControllerBase
         {
             gNewsQueryOptions.SearchKeywords = gNewsQueryOptions.SearchKeywords.Substring(0, MAX_QUERY_LENGTH);
         }
+
+        string cleanedKeywords = Regex.Replace(
+            Regex.Replace(gNewsQueryOptions?.SearchKeywords.Trim(), @"[^\w\s\-'""]", ""), @"\s+", " "
+        );
+
+        gNewsQueryOptions.SearchKeywords = cleanedKeywords;
+
     }
 
     private async Task<List<Article>> SearchArticles(QueryOptions queryOptions)
     {
-        string path = apiOptions.SearchPath + queryOptions.GetSearchQuery();
-        List<Article> articleTitles = await GetArticles(path);
-        return articleTitles;
+        string path = apiOptions.SearchPath + queryOptions.GetSearchQuery() + $"&apikey={apiOptions.ApiKey}";
+        List<Article> articles = await articleService.GetArticlesAsync(httpClient, path);
+        return articles;
     }
 
     private async Task<List<ArticleDTO>> GetTopHeadlines(QueryOptions queryOptions)
     {
-        string path = apiOptions.HeadlinesPath + queryOptions.GetTopHeadlineQueryOptions();
-        List<ArticleDTO> articleTitles = await GetArticleTitles(path);
+        string path = apiOptions.HeadlinesPath + queryOptions.GetTopHeadlineQueryOptions() + $"&apikey={apiOptions.ApiKey}";
+        List<ArticleDTO> articleTitles = await articleService.GetArticleTitles(httpClient, path);
         return articleTitles;
-    }
-
-    private async Task<List<ArticleDTO>> GetArticleTitles(string path)
-    {
-        List<ArticleDTO> articleTitles = new();
-        try
-        {
-            path += $"&apikey={apiOptions.ApiKey}";
-            articleTitles = await articleService.GetArticleTitles(httpClient, path);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-
-        return articleTitles;
-    }
-    private async Task<List<Article>> GetArticles(string path)
-    {
-        List<Article> articles = new();
-        try
-        {
-            path += $"&apikey={apiOptions.ApiKey}";
-            articles = await articleService.GetArticlesAsync(httpClient, path);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-
-        return articles;
     }
 }
 
