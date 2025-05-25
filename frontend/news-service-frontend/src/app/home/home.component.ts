@@ -67,10 +67,10 @@ export class HomeComponent {
       ? this.englandTheme
       : this.australiaTheme;
 
-    // this.getHeadlinesByCategory(this.currentPageSize, NewsCategory.Nation);
+    this.getHeadlinesByCategory(this.currentPageSize, NewsCategory.Nation);
   }
 
-  private getHeadlinesByCategory(pagesize: number, category: string) {
+  getHeadlinesByCategory(pagesize: number, category: string) {
     this.articleService
       .getTopHeadlinesByCategory(pagesize, this.currentNewsTheme, category)
       .subscribe((headlines: Article[]) => (this.headlineInput = headlines));
@@ -96,14 +96,14 @@ export class HomeComponent {
       this.isEnglandTheme = false;
       this.searchResults = [];
       this.currentNewsTheme = this.australiaTheme;
-      // this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
+      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
     }
     if (theme === 'england') {
       this.isEnglandTheme = true;
       this.isAustraliaTheme = false;
       this.searchResults = [];
       this.currentNewsTheme = this.englandTheme;
-      // this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
+      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
     }
   }
 }
