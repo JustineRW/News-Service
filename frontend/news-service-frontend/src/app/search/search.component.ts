@@ -46,7 +46,6 @@ export class SearchComponent {
     if (searchQuery.length > this.MAX_QUERY_LENGTH) {
       searchQuery = searchQuery.substring(0, this.MAX_QUERY_LENGTH);
     }
-
-    return input.trim();
+    return searchQuery;
   }
 }

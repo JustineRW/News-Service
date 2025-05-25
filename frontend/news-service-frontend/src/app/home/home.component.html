@@ -6,19 +6,19 @@
   <div class="d-flex flex-row gap-2">
     <button
       class="btn btn-sm theme-btn d-flex justify-content-center align-items-center"
-      [class.active] = isAustraliaTheme
+      [class.active]="isAustraliaTheme"
       title="Australia theme"
       (click)="changeTheme('australia')"
     >
-      <fa-icon [icon]="faSun" class="text-light"></fa-icon>
+      <fa-icon [icon]="faSun" class="text-light mt-1"></fa-icon>
     </button>
     <button
       class="btn btn-sm theme-btn d-flex justify-content-center align-items-center"
-            [class.active] = isEnglandTheme
+      [class.active]="isEnglandTheme"
       title="England theme"
       (click)="changeTheme('england')"
     >
-      <fa-icon [icon]="faSnowflake" class="text-light"></fa-icon>
+      <fa-icon [icon]="faSnowflake" class="text-light mt-1"></fa-icon>
     </button>
   </div>
 </div>
@@ -28,16 +28,16 @@
   class="pagesize-switcher rounded-pill card p-3 mb-5 shadow-sm border-0 bg-light d-flex flex-row flex-wrap gap-2"
   title="Number of results"
 >
-    <div class="d-flex flex-wrap justify-content-center gap-2">
-      <button
-        class="btn category-btn btn-sm"
-        *ngFor="let pagesize of pageSizes"
-        [class.active]="currentPageSize == pagesize"
-        (click)="onPagesizeButtonClick(pagesize)"
-      >
-        {{ pagesize}}
-      </button>
-    </div>
+  <div class="d-flex flex-wrap justify-content-center gap-2">
+    <button
+      class="btn category-btn btn-sm"
+      *ngFor="let pagesize of pageSizes"
+      [class.active]="currentPageSize == pagesize"
+      (click)="onPagesizeButtonClick(pagesize)"
+    >
+      {{ pagesize }}
+    </button>
+  </div>
 </div>
 
 <!-- Header -->
@@ -105,11 +105,10 @@
 <div class="container mb-5 w-75">
   <div class="row g-4">
     <div class="col-md-4">
-      <div class="card p-4 border-0 shadow-sm">
+      <div class="card p-4 border-0 shadow-sm h-100">
         <h3 class="h4 text-center mb-3">Business & Finance</h3>
         <p class="text-muted">
-          Stay updated with the latest market trends, economic news, and
-          business developments across Australia and the Asia-Pacific region.
+          Stay updated with the latest market trends, economic news, and business developments across {{ currentNewsTheme.country }}.
         </p>
         <div class="text-center mt-auto">
           <button class="btn category-btn">Read More</button>
@@ -117,12 +116,12 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card p-4 border-0 shadow-sm">
+      <div class="card p-4 border-0 shadow-sm h-100">
         <h3 class="h4 text-center mb-3">World News</h3>
         <p class="text-muted">
-          International coverage with an Australian perspective on global
-          events, politics, and cultural developments that matter to our
-          readers.
+          International coverage with an
+          {{ currentNewsTheme.countryAdjective }} perspective on global events,
+          politics, and cultural developments that matter to our readers.
         </p>
         <div class="text-center mt-auto">
           <button class="btn category-btn">Read More</button>
@@ -130,11 +129,12 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card p-4 border-0 shadow-sm">
+      <div class="card p-4 border-0 shadow-sm h-100">
         <h3 class="h4 text-center mb-3">Weather & Environment</h3>
         <p class="text-muted">
           Weather forecasts, climate news, and environmental stories covering
-          Australia's unique landscape and environmental challenges.
+          {{ currentNewsTheme.country }}'s unique landscape and environmental
+          challenges.
         </p>
         <div class="text-center mt-auto">
           <button class="btn category-btn">Read More</button>

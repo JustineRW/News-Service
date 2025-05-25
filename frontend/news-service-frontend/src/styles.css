@@ -7,6 +7,15 @@
     --morning-sky: #AED6F1;
 }
 
+html,
+body {
+    background-color: #fbfafa;
+}
+
+body {
+    font-family: 'Ancizar Serif', serif;
+}
+
 .category-btn {
     background: linear-gradient(135deg, var(--warm-peach) 0%, var(--dawn-gold) 100%);
     border: none;

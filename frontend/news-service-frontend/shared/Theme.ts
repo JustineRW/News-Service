@@ -4,6 +4,7 @@ constructor(
     public subheader : string,
     public countryCode : string,
     public country : string,
+    public countryAdjective : string,
     public language : string,
 ){}
 }

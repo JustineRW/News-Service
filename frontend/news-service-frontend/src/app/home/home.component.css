@@ -18,7 +18,7 @@
     border-radius: 50%;
     border: 2px solid rgba(244, 208, 63, 0.3);
     background: linear-gradient(135deg, var(--dusty-rose) 0%, var(--morning-sky) 100%);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(244, 208, 63, 0.2);

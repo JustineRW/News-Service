@@ -50,6 +50,7 @@ export class HomeComponent {
       'News from snowy England',
       'uk',
       'England',
+      'English',
       'en'
     );
     this.australiaTheme = new Theme(
@@ -57,6 +58,7 @@ export class HomeComponent {
       'News from sunny Australia',
       'au',
       'Australia',
+      'Australian',
       'en'
     );
     this.currentNewsTheme = this.isEnglandTheme
