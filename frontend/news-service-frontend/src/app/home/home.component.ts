@@ -39,8 +39,8 @@ export class HomeComponent {
   searchResults: Article[] = [];
   currentCategory: NewsCategory = NewsCategory.Nation;
   categories = Object.values(NewsCategory);
-  pageSizes : number[] = [5,10,15];
-  currentPageSize: number = 10;
+  pageSizes: number[] = [5, 10, 15];
+  currentPageSize: number = 5;
 
   constructor(private articleService: ArticleService) {}
 
@@ -65,7 +65,7 @@ export class HomeComponent {
       ? this.englandTheme
       : this.australiaTheme;
 
-    // this.getHeadlinesByCategory(NewsCategory.Nation);
+    this.getHeadlinesByCategory(this.currentPageSize, NewsCategory.Nation);
   }
 
   private getHeadlinesByCategory(pagesize: number, category: string) {
@@ -94,7 +94,7 @@ export class HomeComponent {
       this.isEnglandTheme = false;
       this.searchResults = [];
       this.currentNewsTheme = this.australiaTheme;
-      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory)
+      this.getHeadlinesByCategory(this.currentPageSize, this.currentCategory);
     }
     if (theme === 'england') {
       this.isEnglandTheme = true;
