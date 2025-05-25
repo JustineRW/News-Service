@@ -26,7 +26,7 @@ This repo contains a web api application with frontend (Angular, TypeScript, Boo
 
 1. Install frontend dependencies: `npm install` in `frontend/news-service-frontend`. Start frontend with  `ng serve`
 2. Restore backend packages: `dotnet restore` in `backend/src`
-3. Configure your GNews API key
+3. Configure your GNews API key `dotnet user-secrets set "ExternalApi:ApiKey" "your-api-key-here"`
 4. Start backend: `dotnet run` in `backend/src`
 
 
@@ -61,13 +61,7 @@ Pull down repo, using your preferred Git method then open repo in IDE of choice 
 ## Backend Setup
 
 1. Navigate to **backend/src**
-2. Add the GNewsApiKey class (**backend/src/Models/GNewsApiKey.cs**) to your .gitignore
-3. Add your API key to the GNewsApiKey class, Key field
-
-
-> **Note:** Apologies, I know this isn't the typical way to do it! This is a temporary solution for dev purposes only. In production, use environment variables or user secrets.
-
-
+2. Add your API key as a user secret `dotnet user-secrets init`  `dotnet user-secrets set "ExternalApi:ApiKey" "your-api-key-here"`. The builder will automatically add this to the External Api config when building
 4. Run `dotnet restore` command in the terminal to restore the NuGet packages
 5. Run `dotnet run`
 6. The backend will run on [http://localhost:5056](http://localhost:5056) and [https://localhost:7201](https://localhost:7201). 

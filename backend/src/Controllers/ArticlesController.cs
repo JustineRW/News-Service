@@ -20,6 +20,11 @@ public class ArticlesController : ControllerBase
         this.apiOptions = apiOptions.Value;
         this.httpClient = httpClient;
         this.articleService = articleService;
+
+        if (string.IsNullOrEmpty(this.apiOptions.ApiKey))
+        {
+            throw new InvalidOperationException("ApiKey is not configured. Please set it using dotnet user-secrets");
+        }
     }
 
     [HttpGet]
@@ -81,7 +86,7 @@ public class ArticlesController : ControllerBase
         List<ArticleDTO> articleTitles = new();
         try
         {
-            path += $"&apikey={GNewsApiKey.Key}";
+            path += $"&apikey={apiOptions.ApiKey}";
             articleTitles = await articleService.GetArticleTitles(httpClient, path);
         }
         catch (Exception e)
@@ -96,7 +101,7 @@ public class ArticlesController : ControllerBase
         List<Article> articles = new();
         try
         {
-            path += $"&apikey={GNewsApiKey.Key}";
+            path += $"&apikey={apiOptions.ApiKey}";
             articles = await articleService.GetArticlesAsync(httpClient, path);
         }
         catch (Exception e)
